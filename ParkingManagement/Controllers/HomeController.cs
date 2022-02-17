@@ -108,5 +108,10 @@ namespace ParkingManagement.Controllers
 
             return fee;
         }
+
+        public ActionResult ParkingView()
+        {
+            return View();
+        }
     }
 }

@@ -113,10 +113,7 @@ namespace ParkingManagement.Controllers
             }
         }
 
-        public ActionResult UserProfile()
-        {
-            return View();
-        }
+      
 
     }
 }

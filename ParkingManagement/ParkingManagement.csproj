@@ -218,6 +218,10 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\login\user.jpg" />
+    <Content Include="Content\img\parkinglot\parkinglot_1.jpg" />
+    <Content Include="Content\img\parkinglot\parkinglot_2.jpg" />
+    <Content Include="Content\img\parkinglot\parkinglot_3.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -282,6 +286,7 @@
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Login\Register.cshtml" />
     <Content Include="Views\Login\UserProfile.cshtml" />
+    <Content Include="Views\Home\ParkingView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
