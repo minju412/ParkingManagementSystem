@@ -218,6 +218,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\login\logo.PNG" />
     <Content Include="Content\img\login\user.jpg" />
     <Content Include="Content\img\parkinglot\parkinglot_1.jpg" />
     <Content Include="Content\img\parkinglot\parkinglot_2.jpg" />

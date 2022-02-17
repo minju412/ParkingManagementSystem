@@ -43,7 +43,7 @@ namespace ParkingManagement.Controllers
         }
 
         // 차량 번호는 Input에서 받음..
-        //[Authorize]
+        [Authorize]
         public ActionResult TableDelete_Input(string carnum)
         {
             var model = Car.Get(carnum);
