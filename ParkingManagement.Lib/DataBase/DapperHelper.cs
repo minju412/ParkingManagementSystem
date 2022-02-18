@@ -46,8 +46,8 @@ namespace ParkingManagement.Lib.DataBase
 
         public int Execute(string sql, object param)
         {
-            return Dapper.SqlMapper.Execute(_conn, sql, param);
-            //return Dapper.SqlMapper.Execute(_conn, sql, param, _trans);
+            //return Dapper.SqlMapper.Execute(_conn, sql, param);
+            return Dapper.SqlMapper.Execute(_conn, sql, param, _trans);
         }
 
 

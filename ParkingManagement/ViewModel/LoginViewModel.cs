@@ -24,9 +24,6 @@ namespace ParkingManagement.ViewModel
 
         internal LoginViewModel GetLoginUser()
         {
-            // this.User_Name
-            // this.Password
-
             string sql = "SELECT user_seq,user_name,email,password FROM c_user WHERE email=:email";
 
             LoginViewModel user;
@@ -40,14 +37,9 @@ namespace ParkingManagement.ViewModel
                 user = Dapper.SqlMapper.QuerySingleOrDefault<LoginViewModel>(conn, sql, this);
             }
 
-            if (user == null)
-            {
-                throw new Exception("사용자가 존재하지 않습니다.");
-            }
-
             if (user.Password != this.Password)
             {
-                throw new Exception("비밀번호가 틀립니다.");
+                user = null;
                 // 틀린 횟수, ...
             }
 

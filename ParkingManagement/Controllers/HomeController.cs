@@ -117,6 +117,7 @@ namespace ParkingManagement.Controllers
             return fee;
         }
 
+        // 주차장 시설 확인
         public ActionResult ParkingView()
         {
             return View();

@@ -5,24 +5,23 @@
 
 <head>
     <style>
-        div.col-md-12 {
-            width: 1100px;
+        h3.card-title {
+            font-weight: bold;
         }
-
+        div.col-md-12 {
+            width: 950px;
+        }
         div.card-header {
             background-color: white;
             text-align: center;
             margin-top: 15px;
         }
-
         div.card-body.table-full-width.table-responsive {
             margin-bottom: 50px;
         }
-
         #srow {
             display: inline-block;
         }
-
         body {
             text-align: center;
         }
@@ -40,7 +39,7 @@
                     <div class="card-body table-full-width table-responsive">
                         <table class="table table-hover">
                             <thead>
-                            <th>ID</th>
+                            @*<th>ID</th>*@
                             <th>차량 번호</th>
                             <th>입차 시각</th>
                             <th>차량 주인</th>
@@ -49,7 +48,7 @@
                                 @foreach (var item in Model)
                                 {
                                     <tr>
-                                        <td>@item.Car_ID</td>
+                                        @*<td>@item.Car_ID</td>*@
                                         <td>@item.CarNum</td>
                                         <td>@item.InTime.ToString("yyyy-MM-dd HH:mm")</td>
                                         <td>@item.Owner_Name</td>

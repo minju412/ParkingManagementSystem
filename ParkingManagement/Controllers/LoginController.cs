@@ -30,8 +30,9 @@ namespace ParkingManagement.Controllers
         }
 
         [HttpGet]
-        public ActionResult Login()
+        public ActionResult Login(string msg)
         {
+            ViewData["msg"] = msg;
             return View();
         }
 
@@ -41,39 +42,35 @@ namespace ParkingManagement.Controllers
             // ID, 비밀번호 - 필수
             if (ModelState.IsValid)
             {
-                //using (var db = new CarDb())
-                //{
-                model.ConvertPassword(); //비밀번호 암호화
-                var user = model.GetLoginUser();
-                // Linq - 메서드 체이닝
-                //var user = db.Users
-                //    .FirstOrDefault(u => u.Email.Equals(model.Email) &&
-                //                    u.Password.Equals(model.Password));
-
-                //로그인에 성공했을 때
-                if (user != null)
+                try
                 {
-                    // 세션에 로그인 정보 담음
-                    //HttpContext.Session.SetInt32("USER_LOGIN_KEY", user.User_Seq);
+                    model.ConvertPassword(); //비밀번호 암호화
+                    var user = model.GetLoginUser();
 
-
-                    // 세션에 로그인 정보 담음
-                    var cookie = new HttpCookie(FormsAuthentication.FormsCookieName)
+                    //로그인에 성공했을 때
+                    if (user != null)
                     {
-                        Domain = "localhost",
-                        Expires = DateTime.Now.AddHours(4),
-                        Value = FormsAuthentication.Encrypt(new FormsAuthenticationTicket(model.Email, false, 60))
-                    };
-                    //HttpContext.Current.Response.Cookies.Add(cookie);
-                    HttpContext.Response.Cookies.Add(cookie);
+                        // 세션에 로그인 정보 담음
+                        var cookie = new HttpCookie(FormsAuthentication.FormsCookieName)
+                        {
+                            Domain = "localhost",
+                            Expires = DateTime.Now.AddHours(4),
+                            Value = FormsAuthentication.Encrypt(new FormsAuthenticationTicket(model.Email, false, 60))
+                        };
+                        //HttpContext.Current.Response.Cookies.Add(cookie);
+                        HttpContext.Response.Cookies.Add(cookie);
 
-                    return Redirect("/");
+                        return Redirect("/");
+                    }
+
+                    //로그인에 실패했을 때
+                    throw new Exception("사용자 ID 혹은 비밀번호가 올바르지 않습니다");
                 }
-                //}
-                //로그인에 실패했을 때
-                //ModelState.AddModelError(string.Empty, "사용자 ID 혹은 비밀번호가 올바르지 않습니다."); // asp-validation-summary 사용 불가 (Core용)
+                catch (Exception ex)
+                {
+                    return Redirect($"/login/login?msg={HttpUtility.UrlEncode(ex.Message)}");
+                }
             }
-            //return View(model);
             return View();
         }
 
@@ -113,7 +110,7 @@ namespace ParkingManagement.Controllers
             }
         }
 
-      
+
 
     }
 }
