@@ -1,31 +1,42 @@
-﻿<head>
+﻿@{
+    string msg = ViewData["msg"] as string;
+}
+
+<head>
     <style>
         h3.text-center {
             font-weight: bold;
         }
+
         div.card-block {
             margin-top: 30px;
             margin-bottom: 20px;
             margin-left: 50px;
             margin-right: 50px;
         }
+
         div.form-group.form-primary {
             margin-top: 20px;
         }
+
         label.float-label {
             margin-bottom: 5px;
         }
+
         div.row.m-t-30 {
             margin-top: 80px;
             float: right;
         }
+
         input.form-control {
             width: 400px;
-            text-align:center;
+            text-align: center;
         }
+
         #sform {
             display: inline-block;
         }
+
         body {
             text-align: center;
         }
@@ -41,6 +52,10 @@
                             <div class="row m-b-20">
                                 <div class="col-md-12">
                                     <h3 class="text-center">입차 하기</h3>
+                                    @if (string.IsNullOrWhiteSpace(msg) == false)
+                                    {
+                                        <div class="alert alert-danger">@msg</div>
+                                    }
                                 </div>
                             </div>
                             <div class="form-group form-primary">

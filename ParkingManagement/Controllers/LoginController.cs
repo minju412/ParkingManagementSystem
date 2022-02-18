@@ -11,15 +11,11 @@ namespace ParkingManagement.Controllers
     {
         public ActionResult Logout()
         {
-            //HttpContext.Session.Remove("USER_LOGIN_KEY");
-
             var cookie = new HttpCookie(FormsAuthentication.FormsCookieName)
             {
                 Expires = DateTime.Now.AddDays(-1)
             };
             HttpContext.Response.Cookies.Add(cookie);
-            //HttpContext.Current.Response.Cookies.Add(cookie);
-
 
             return RedirectToAction("Index", "Home");
         }
@@ -57,7 +53,6 @@ namespace ParkingManagement.Controllers
                             Expires = DateTime.Now.AddHours(4),
                             Value = FormsAuthentication.Encrypt(new FormsAuthenticationTicket(model.Email, false, 60))
                         };
-                        //HttpContext.Current.Response.Cookies.Add(cookie);
                         HttpContext.Response.Cookies.Add(cookie);
 
                         return Redirect("/");

@@ -1,6 +1,7 @@
 ﻿using PagedList;
 using ParkingManagement.Models;
 using System;
+using System.Web;
 using System.Web.Mvc;
 
 namespace ParkingManagement.Controllers
@@ -25,28 +26,42 @@ namespace ParkingManagement.Controllers
         }
 
         [Authorize] // 로그인 해야 입차 가능
-        public ActionResult TableInsert()
+        public ActionResult TableInsert(string msg)
         {
+            ViewData["msg"] = msg;
             return View();
         }
 
         [Authorize]
         public ActionResult TableInsert_Input(string carnum)
         {
-            var model = new Car();
+            try
+            {
+                var model = new Car();
 
-            model.CarNum = carnum;
-            //model.Owner = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            model.Owner_Name = User.Identity.Name;
+                model.CarNum = carnum;
+                //model.Owner = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                model.Owner_Name = User.Identity.Name;
 
-            model.Insert();
+                model.Insert();
+                //if (model.Insert() <= 0)
+                //{
+                //    throw new Exception("이미 입차된 차량입니다");
+                //}
 
-            return Content("<script> alert('차량번호: " + model.CarNum + " 입차합니다.'); location.href = '/home/TableList'; </script>");
+                return Content("<script> alert('차량번호: " + model.CarNum + " 입차합니다.'); location.href = '/home/TableList'; </script>");
+            }
+            catch (Exception ex)
+            {
+                // 실패
+                return Redirect($"/home/tableinsert?msg={HttpUtility.UrlEncode(ex.Message)}");
+            }
         }
 
         [Authorize]
-        public ActionResult TableDelete()
+        public ActionResult TableDelete(string msg)
         {
+            ViewData["msg"] = msg;
             return View();
         }
 
@@ -54,29 +69,41 @@ namespace ParkingManagement.Controllers
         [Authorize]
         public ActionResult TableDelete_Input(string carnum)
         {
-            var model = Car.Get(carnum);
+            try
+            {
+                var model = Car.Get(carnum);
 
-            // 권한 확인
-            //var userSeq = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            //if (model.Owner != userSeq)
-            //{
-            //    throw new Exception("수정할 수 없습니다.");
-            //}
+                if (model == null)
+                {
+                    throw new Exception("없는 차량입니다");
+                }
 
-            model.UpdateOutTime(); // db update - 출차시각 
-            model = Car.Get(carnum); // 출차 시각 업데이트된 모델 받음
+                // 권한 확인
+                //var userSeq = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                //if (model.Owner != userSeq)
+                //{
+                //    throw new Exception("수정할 수 없습니다.");
+                //}
 
-            int fee = CalcFee(carnum);
+                model.UpdateOutTime(); // db update - 출차시각 
+                model = Car.Get(carnum); // 출차 시각 업데이트된 모델 받음
 
-            model.UpdateFee(fee); // db update - 주차요금
-            model = Car.Get(carnum); // 주차요금 업데이트된 모델 받음
+                int fee = CalcFee(carnum);
 
-            model.Delete(); // db delete
+                model.UpdateFee(fee); // db update - 주차요금
+                model = Car.Get(carnum); // 주차요금 업데이트된 모델 받음
 
-            // alert 후 redirect
-            return Content("<script> alert('차량번호: " + model.CarNum + " 출차합니다.\\n주차 요금은" + model.Parking_Fee.ToString() + "원 입니다.'); location.href = '/home/TableList'; </script>");
+                model.Delete(); // db delete
 
-            throw new Exception("잘못된 요청입니다");
+                // alert 후 redirect
+                return Content("<script> alert('차량번호: " + model.CarNum + " 출차합니다.\\n주차 요금은" + model.Parking_Fee.ToString() + "원 입니다.'); location.href = '/home/TableList'; </script>");
+            }
+            catch (Exception ex)
+            {
+                // 실패
+                return Redirect($"/home/tabledelete?msg={HttpUtility.UrlEncode(ex.Message)}");
+            }
+            //throw new Exception("잘못된 요청입니다");
         }
 
         // 주차 요금 계산
