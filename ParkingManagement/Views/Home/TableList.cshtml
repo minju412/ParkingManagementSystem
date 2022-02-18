@@ -1,41 +1,65 @@
 ﻿@model List<ParkingManagement.Models.Car>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card strpied-tabled-with-hover">
-                <div class="card-header ">
-                    <h3 class="card-title">차량 보기</h3>
-                    <p class="card-category">현재 주차된 차량입니다.</p>
-                </div>
-                <div class="card-body table-full-width table-responsive">
-                    <table class="table table-hover table-striped">
-                        <thead>
-                        <th>ID</th>
-                        <th>차량 번호</th>
-                        <th>입차 시각</th>
-                        <th>차량 주인</th>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>@item.Car_ID</td>
-                                    <td>@item.CarNum</td>
-                                    <td>@item.InTime.ToString("yyyy-MM-dd HH:mm")</td>
-                                    <td>@item.Owner_Name</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                    @if (Model.Count() == 0)
-                    {
-                        <div class="alert alert-info">
-                            데이터가 없습니다
-                        </div>
-                    }
+<head>
+    <style>
+        div.col-md-12 {
+            width: 1100px;
+        }
+        div.card-header {
+            background-color: white;
+            text-align: center;
+            margin-top: 15px;
+        }
+        div.card-body.table-full-width.table-responsive {
+            margin-bottom: 50px;
+        }
+        #srow {
+            display: inline-block;
+        }
+        body {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row" id="srow">
+            <div class="col-md-12">
+                <div class="card card-plain table-plain-bg">
+                    <div class="card-header">
+                        <h3 class="card-title">차량 보기</h3>
+                        <p class="card-category">현재 주차된 차량입니다.</p>
+                    </div>
+                    <div class="card-body table-full-width table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <th>ID</th>
+                            <th>차량 번호</th>
+                            <th>입차 시각</th>
+                            <th>차량 주인</th>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.Car_ID</td>
+                                        <td>@item.CarNum</td>
+                                        <td>@item.InTime.ToString("yyyy-MM-dd HH:mm")</td>
+                                        <td>@item.Owner_Name</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        @if (Model.Count() == 0)
+                        {
+                            <div class="alert alert-info">
+                                데이터가 없습니다
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
-</div>
+</body>
