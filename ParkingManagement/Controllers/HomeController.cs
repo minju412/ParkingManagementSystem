@@ -1,4 +1,5 @@
-﻿using ParkingManagement.Models;
+﻿using PagedList;
+using ParkingManagement.Models;
 using System;
 using System.Web.Mvc;
 
@@ -11,9 +12,16 @@ namespace ParkingManagement.Controllers
             return View();
         }
 
-        public ActionResult TableList(string search)
+        public ActionResult TableList(int? page, string search)
         {
-            return View(Car.GetList(search));
+            // Paging
+
+            int pageNum = (page ?? 1);
+            int listCount = 5;
+
+            var cars = Car.GetList(search);
+
+            return View(cars.ToPagedList(pageNum, listCount));
         }
 
         [Authorize] // 로그인 해야 입차 가능

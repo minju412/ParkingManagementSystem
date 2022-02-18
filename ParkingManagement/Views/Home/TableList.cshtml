@@ -1,21 +1,28 @@
-﻿@model List<ParkingManagement.Models.Car>
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<ParkingManagement.Models.Car>
+
+@*@model List<ParkingManagement.Models.Car>*@
 
 <head>
     <style>
         div.col-md-12 {
             width: 1100px;
         }
+
         div.card-header {
             background-color: white;
             text-align: center;
             margin-top: 15px;
         }
+
         div.card-body.table-full-width.table-responsive {
             margin-bottom: 50px;
         }
+
         #srow {
             display: inline-block;
         }
+
         body {
             text-align: center;
         }
@@ -57,9 +64,13 @@
                             </div>
                         }
                     </div>
+                    <div class="text-center">
+                        <div class="btn-group">
+                            @Html.PagedListPager(Model, page => Url.Action("TableList", new { page }))
+                        </div>
+                    </div>
                 </div>
             </div>
-
         </div>
     </div>
 </body>
