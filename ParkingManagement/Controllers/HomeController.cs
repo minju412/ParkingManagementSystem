@@ -1,6 +1,7 @@
 ﻿using PagedList;
 using ParkingManagement.Models;
 using System;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 
@@ -79,11 +80,10 @@ namespace ParkingManagement.Controllers
                 }
 
                 // 권한 확인
-                //var userSeq = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-                //if (model.Owner != userSeq)
-                //{
-                //    throw new Exception("수정할 수 없습니다.");
-                //}
+                if(model.Owner_Name != User.Identity.Name)
+                {
+                    throw new Exception("출차할 수 없습니다.");
+                }
 
                 model.UpdateOutTime(); // db update - 출차시각 
                 model = Car.Get(carnum); // 출차 시각 업데이트된 모델 받음
