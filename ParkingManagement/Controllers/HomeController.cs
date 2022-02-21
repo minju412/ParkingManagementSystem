@@ -20,7 +20,7 @@ namespace ParkingManagement.Controllers
             int pageNum = (page ?? 1);
             int listCount = 5;
 
-            var cars = Car.GetList(search);
+            var cars = CarModel.GetList(search);
 
             return View(cars.ToPagedList(pageNum, listCount));
         }
@@ -37,12 +37,12 @@ namespace ParkingManagement.Controllers
         {
             try
             {
-                var model = new Car();
+                var model = new CarModel();
 
                 model.CarNum = carnum;
                 model.Owner_Name = User.Identity.Name;
 
-                var cars = Car.GetList(carnum);
+                var cars = CarModel.GetList(carnum);
                 foreach (var item in cars)
                 {
                     if (model.CarNum == item.CarNum)
@@ -74,7 +74,7 @@ namespace ParkingManagement.Controllers
         {
             try
             {
-                var model = Car.Get(carnum);
+                var model = CarModel.Get(carnum);
 
                 if (model == null)
                 {
@@ -88,12 +88,12 @@ namespace ParkingManagement.Controllers
                 }
 
                 model.UpdateOutTime(); // db update - 출차시각 
-                model = Car.Get(carnum); // 출차 시각 업데이트된 모델 받음
+                model = CarModel.Get(carnum); // 출차 시각 업데이트된 모델 받음
 
                 int fee = CalcFee(carnum);
 
                 model.UpdateFee(fee); // db update - 주차요금
-                model = Car.Get(carnum); // 주차요금 업데이트된 모델 받음
+                model = CarModel.Get(carnum); // 주차요금 업데이트된 모델 받음
 
                 model.Delete(); // db delete
 
@@ -118,7 +118,7 @@ namespace ParkingManagement.Controllers
             int add_min = 10;
             int add_fee = 500;
 
-            var model = Car.Get(carnum);
+            var model = CarModel.Get(carnum);
 
             // 주차 시간 계산 (분으로 환산)
             int min = (model.OutTime.Day * 24 * 60 + model.OutTime.Hour * 60 + model.OutTime.Minute) - (model.InTime.Day * 24 * 60 + model.InTime.Hour * 60 + model.InTime.Minute);

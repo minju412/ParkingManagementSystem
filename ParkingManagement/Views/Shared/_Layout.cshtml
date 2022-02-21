@@ -1,6 +1,5 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -30,6 +29,7 @@
     <!-- Font -->
     <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
 
+    <!-- Style -->
     <style>
         nav.navbar {
             font-family: 'Spoqa Han Sans Neo', 'sans-serif';
@@ -43,9 +43,7 @@
     * License: https://bootstrapmade.com/license/
     ======================================================== -->
 </head>
-
 <body>
-
     <!-- ======= Top Bar ======= -->
     @*<section id="topbar" class="d-flex align-items-center">
             <div class="container d-flex justify-content-center justify-content-md-between">
@@ -65,43 +63,38 @@
     <!-- ======= Header ======= -->
     <header id="header" class="d-flex align-items-center">
         <div class="container d-flex align-items-center justify-content-between">
-
             <h1 class="logo"><a href="/home/index">BizLand<span>.</span></a></h1>
-            <!-- Uncomment below if you prefer to use an image logo -->
-            <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt=""></a>-->
-
             <nav id="navbar" class="navbar">
                 <ul>
                     <li><a class="navbar" href="/home/index">Home</a></li>
-                    <li><a class="navbar" href="/home/tableinsert">입차하기</a></li>
-                    <li><a class="navbar" href="/home/tabledelete">출차하기</a></li>
-                    <li><a class="navbar" href="/home/tablelist">차량보기</a></li>
-                    <li><a class="navbar" href="/home/parkingview">시설확인</a></li>
-                    @if (User.Identity.IsAuthenticated == false)
+                    @if (User.Identity.IsAuthenticated && User.Identity.Name == "admin@gmail.com") // 관리자 계정
                     {
-                        <li><a class="navbar" href="/login/login">Login</a></li>
-                        <li><a class="navbar" href="/login/register">Register</a></li>
-                    }
-                    @if (User.Identity.IsAuthenticated && User.Identity.Name == "admin@gmail.com")
-                    {
+                        @*<li><a class="navbar" href="/admin/totaltablelist">입출차기록</a></li>
+                            <li><a class="navbar" href="/admin/checkfee">수입확인</a></li>
+                            <li><a class="navbar" href="/admin/memberlist">회원관리</a></li>*@
                         <li class="dropdown">
                             <a href="#"><span>관리자 페이지</span> <i class="bi bi-chevron-down"></i></a>
                             <ul>
                                 <li><a href="/admin/totaltablelist">입출차기록</a></li>
                                 <li><a href="/admin/checkfee">수입확인</a></li>
+                                <li><a href="/admin/memberlist">회원관리</a></li>
                             </ul>
                         </li>
-                        @*<li><a class="navbar" href="/admin/totaltablelist">출차기록</a></li>*@
                     }
-
-                    @*@if (User.Identity.IsAuthenticated)
+                    else // 일반 사용자 계정
+                    {
+                        <li><a class="navbar" href="/home/tableinsert">입차하기</a></li>
+                        <li><a class="navbar" href="/home/tabledelete">출차하기</a></li>
+                        <li><a class="navbar" href="/home/tablelist">차량보기</a></li>
+                        <li><a class="navbar" href="/home/parkingview">시설확인</a></li>
+                        if (User.Identity.IsAuthenticated == false)
                         {
-                            <li><a class="navbar" href="/login/logout">Logout</a></li>
-                        }*@
-
+                            <li><a class="navbar" href="/login/login">Login</a></li>
+                            <li><a class="navbar" href="/login/register">Register</a></li>
+                        }
+                    }
                     @if (User.Identity.IsAuthenticated) //로그인 성공
                     {
-                        <!--DROPDOWN-->
                         <li class="dropdown">
                             <a href="#">
                                 <span class="ml-2 d-none d-lg-inline-block">
@@ -111,11 +104,9 @@
                                 <i class="bi bi-chevron-down"></i>
                             </a>
                             <ul>
-
                                 <li><a href="/login/logout">Logout</a></li>
                             </ul>
                         </li>
-                        <!--END DROPDOWN-->
                     }
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>

@@ -1,16 +1,5 @@
 ﻿@using PagedList.Mvc;
-@model PagedList.IPagedList<ParkingManagement.Models.Car>
-@*@model List<ParkingManagement.Models.Car>*@
-
-@*@{
-    int tot_fee = 0;
-
-    foreach (var item in Model)
-    {
-        tot_fee += item.Parking_Fee;
-    }
-
-}*@
+@model PagedList.IPagedList<ParkingManagement.Models.CarModel>
 
 <head>
     <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
@@ -28,11 +17,6 @@
             text-align: center;
             margin-top: 15px;
         }
-
-      /*  div.card-footer {
-            background-color: white;
-            font-weight: bold;
-        }*/
 
         div.card-body.table-full-width.table-responsive {
             margin-bottom: 20px;
@@ -85,7 +69,6 @@
                                 }
                             </tbody>
                         </table>
-                        @*<p class="card-category">주차장의 총 수익은 @tot_fee 입니다.</p>*@
                         @if (Model.Count() == 0)
                         {
                             <div class="alert alert-info">
@@ -98,9 +81,6 @@
                             @Html.PagedListPager(Model, page => Url.Action("TotalTableList", new { page }))
                         </div>
                     </div>
-                    @*<div class="card-footer">
-                        <p class="card-category">주차장의 총 수익은 @tot_fee 입니다.</p>
-                    </div>*@
                 </div>
             </div>
         </div>

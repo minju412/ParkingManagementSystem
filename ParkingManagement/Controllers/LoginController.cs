@@ -78,7 +78,7 @@ namespace ParkingManagement.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(User input)
+        public ActionResult Register(UserModel input)
         {
             try
             {

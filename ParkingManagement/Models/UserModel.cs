@@ -1,9 +1,10 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 using ParkingManagement.Lib.DataBase;
+using System.Collections.Generic;
 
 namespace ParkingManagement.Models
 {
-    public class User
+    public class UserModel
     {
         public int User_Seq { get; set; }
 
@@ -14,6 +15,17 @@ namespace ParkingManagement.Models
         public string Password { get; set; }
 
         public string Role { get; set; }
+
+        // 관리자용 - 회원 리스트
+        public static List<UserModel> GetUserList(string search)
+        {
+            string sql = "SELECT user_name,email FROM c_user WHERE role='user' ORDER BY user_seq ASC";
+
+            using (var db = new DapperHelper())
+            {
+                return db.Query<UserModel>(sql, new { search = search });
+            }
+        }
 
         public void ConvertPassword() // password 암호화
         {

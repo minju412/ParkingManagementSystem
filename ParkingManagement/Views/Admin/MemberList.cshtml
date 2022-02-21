@@ -1,6 +1,5 @@
 ﻿@using PagedList.Mvc;
-@model PagedList.IPagedList<ParkingManagement.Models.CarModel>
-@*@model List<ParkingManagement.Models.CarModel>*@
+@model PagedList.IPagedList<ParkingManagement.Models.UserModel>
 
 <head>
     <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
@@ -27,6 +26,10 @@
             display: inline-block;
         }
 
+        p.card-category {
+            font-weight: bold;
+        }
+
         body {
             text-align: center;
             font-family: 'Spoqa Han Sans Neo', 'sans-serif';
@@ -39,25 +42,21 @@
             <div class="col-md-12">
                 <div class="card card-plain table-plain-bg">
                     <div class="card-header">
-                        <h3 class="card-title">차량 보기</h3>
-                        <p class="card-category">현재 주차된 차량입니다.</p>
+                        <h3 class="card-title">모든 회원 보기</h3>
+                        <p class="card-category">가입된 회원 정보입니다.</p>
                     </div>
                     <div class="card-body table-full-width table-responsive">
                         <table class="table table-hover">
                             <thead>
-                                @*<th>ID</th>*@
-                            <th>차량 번호</th>
-                            <th>입차 시각</th>
-                            <th>차량 주인</th>
+                            <th>사용자 이름</th>
+                            <th>사용자 이메일</th>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model)
                                 {
                                     <tr>
-                                        @*<td>@item.Car_ID</td>*@
-                                        <td>@item.CarNum</td>
-                                        <td>@item.InTime.ToString("yyyy-MM-dd HH:mm")</td>
-                                        <td>@item.Owner_Name</td>
+                                        <td>@item.User_Name</td>
+                                        <td>@item.Email</td>
                                     </tr>
                                 }
                             </tbody>
@@ -71,7 +70,7 @@
                     </div>
                     <div class="text-center">
                         <div class="btn-group">
-                            @Html.PagedListPager(Model, page => Url.Action("TableList", new { page }))
+                            @Html.PagedListPager(Model, page => Url.Action("MemberList", new { page }))
                         </div>
                     </div>
                 </div>

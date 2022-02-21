@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ParkingManagement.Models
 {
-    public class Car
+    public class CarModel
     {
         public int Car_ID { get; set; }
 
@@ -21,34 +21,34 @@ namespace ParkingManagement.Models
         public string Flag { get; set; }
 
         // 사용자용 (주차장 이용 중인 차)
-        public static List<Car> GetList(string search)
+        public static List<CarModel> GetList(string search)
         {
             string sql = "SELECT * FROM c_table WHERE flag='y' ORDER BY car_id ASC"; 
 
             using (var db = new DapperHelper())
             {
-                return db.Query<Car>(sql, new { search = search });
+                return db.Query<CarModel>(sql, new { search = search });
             }
         }
 
         // 관리자용 (주차장 이용 끝난 차)
-        public static List<Car> GetTotalList(string search)
+        public static List<CarModel> GetTotalList(string search)
         {
             string sql = "SELECT * FROM c_table WHERE flag='n' ORDER BY car_id ASC"; 
 
             using (var db = new DapperHelper())
             {
-                return db.Query<Car>(sql, new { search = search });
+                return db.Query<CarModel>(sql, new { search = search });
             }
         }
 
-        public static Car Get(string carnum)
+        public static CarModel Get(string carnum)
         {
             string sql = "SELECT * FROM c_table WHERE carnum=:carnum AND flag='y'";
 
             using (var db = new DapperHelper())
             {
-                return db.QuerySingle<Car>(sql, new { carnum = carnum });
+                return db.QuerySingle<CarModel>(sql, new { carnum = carnum });
             }
         }
 
