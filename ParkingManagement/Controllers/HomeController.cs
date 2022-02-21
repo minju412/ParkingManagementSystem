@@ -110,13 +110,13 @@ namespace ParkingManagement.Controllers
         // 주차 요금 계산
         int CalcFee(string carnum)
         {
-            // 30분 미만 기본요금 3000원
+            // 30분 미만 기본요금 1500원
             int basic_min = 30;
-            int basic_fee = 3000;
+            int basic_fee = 1500;
 
-            // 추가 10분당 1000원
+            // 추가 10분당 500원
             int add_min = 10;
-            int add_fee = 1000;
+            int add_fee = 500;
 
             var model = Car.Get(carnum);
 

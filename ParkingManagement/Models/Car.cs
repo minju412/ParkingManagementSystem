@@ -43,7 +43,6 @@ namespace ParkingManagement.Models
         public int Insert()
         {
             string sql = "INSERT INTO c_table (car_id,carnum,intime,owner_name,flag) VALUES (C_TABLE_SEQ.NEXTVAL,:carnum,SYSDATE,:owner_name,'y')";
-            //string sql = "INSERT INTO c_table (car_id,carnum,intime,owner_name,flag) SELECT C_TABLE_SEQ.NEXTVAL,:carnum,SYSDATE,:owner_name,'y' FROM dual WHERE NOT EXISTS(SELECT 1 FROM c_table WHERE carnum=:carnum AND flag='y')";
 
             using (var db = new DapperHelper())
             {
