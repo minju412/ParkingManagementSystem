@@ -20,9 +20,21 @@ namespace ParkingManagement.Models
 
         public string Flag { get; set; }
 
+        // 사용자용 (주차장 이용 중인 차)
         public static List<Car> GetList(string search)
         {
-            string sql = "SELECT * FROM c_table WHERE flag='y' ORDER BY car_id ASC"; ;
+            string sql = "SELECT * FROM c_table WHERE flag='y' ORDER BY car_id ASC"; 
+
+            using (var db = new DapperHelper())
+            {
+                return db.Query<Car>(sql, new { search = search });
+            }
+        }
+
+        // 관리자용 (주차장 이용 끝난 차)
+        public static List<Car> GetTotalList(string search)
+        {
+            string sql = "SELECT * FROM c_table WHERE flag='n' ORDER BY car_id ASC"; 
 
             using (var db = new DapperHelper())
             {
@@ -81,7 +93,7 @@ namespace ParkingManagement.Models
             }
         }
 
-     
+
 
     }
 }

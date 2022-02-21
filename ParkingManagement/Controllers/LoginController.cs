@@ -1,6 +1,7 @@
 ﻿using ParkingManagement.Models;
 using ParkingManagement.ViewModel;
 using System;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -79,7 +80,6 @@ namespace ParkingManagement.Controllers
         [HttpPost]
         public ActionResult Register(User input)
         {
-
             try
             {
                 string password2 = Request.Form["password2"];
@@ -93,7 +93,14 @@ namespace ParkingManagement.Controllers
                 input.ConvertPassword();
 
                 // db에 insert
-                input.Register();
+                if (input.User_Name == "admin") // admin 이라면
+                {
+                    input.Admin_Register();
+                }
+                else
+                {
+                    input.User_Register();
+                }
 
                 // 회원가입 성공
                 return Redirect("/login/login");

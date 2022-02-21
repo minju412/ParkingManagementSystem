@@ -1,4 +1,5 @@
 ﻿using Oracle.ManagedDataAccess.Client;
+using ParkingManagement.Lib.DataBase;
 
 namespace ParkingManagement.Models
 {
@@ -12,6 +13,8 @@ namespace ParkingManagement.Models
 
         public string Password { get; set; }
 
+        public string Role { get; set; }
+
         public void ConvertPassword() // password 암호화
         {
             var sha = new System.Security.Cryptography.HMACSHA512();
@@ -23,17 +26,23 @@ namespace ParkingManagement.Models
             this.Password = System.Convert.ToBase64String(hash);
         }
 
-        internal int Register() // 사용자 등록
+        internal int User_Register() // 사용자 등록
         {
-            string sql = "INSERT INTO c_user (user_seq,user_name,email,password) VALUES (C_USER_SEQ.NEXTVAL,:user_name,:email,:password)";
+            string sql = "INSERT INTO c_user (user_seq,user_name,email,password,role) VALUES (C_USER_SEQ.NEXTVAL,:user_name,:email,:password,'user')";
 
-            string _strConn = "Data Source=(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521)))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=xe)));User Id=ann;Password=111111;";
-
-            using (var conn = new OracleConnection(_strConn))
+            using (var db = new DapperHelper())
             {
-                conn.Open();
+                return db.Execute(sql, this);
+            }
+        }
 
-                return Dapper.SqlMapper.Execute(conn, sql, this);
+        internal int Admin_Register() // 관리자 등록
+        {
+            string sql = "INSERT INTO c_user (user_seq,user_name,email,password,role) VALUES (C_USER_SEQ.NEXTVAL,:user_name,:email,:password,'admin')";
+
+            using (var db = new DapperHelper())
+            {
+                return db.Execute(sql, this);
             }
         }
     }

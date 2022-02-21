@@ -1,0 +1,63 @@
+﻿@using PagedList.Mvc;
+@*@model PagedList.IPagedList<ParkingManagement.Models.Car>*@
+@model List<ParkingManagement.Models.Car>
+
+@{
+    int tot_fee = 0;
+
+    foreach (var item in Model)
+    {
+        tot_fee += item.Parking_Fee;
+    }
+
+}
+
+<head>
+    <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
+    <style>
+        h3.card-title {
+            font-weight: bold;
+        }
+
+        div.col-md-12 {
+            width: 700px;
+            /*width: 950px;*/
+        }
+
+        div.card-header {
+            background-color: white;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        #srow {
+            display: inline-block;
+        }
+
+        p.card-category {
+            font-weight: bold;
+        }
+
+        body {
+            text-align: center;
+            font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row" id="srow">
+            <div class="col-md-12">
+                <div class="card card-plain table-plain-bg">
+                    <div class="card-header">
+                        <h3 class="card-title">주차장 수입 보기</h3>
+                        <p class="card-category">수입보기 페이지입니다</p>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-category">주차장의 총 수익은 @tot_fee 입니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

@@ -1,0 +1,108 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<ParkingManagement.Models.Car>
+@*@model List<ParkingManagement.Models.Car>*@
+
+@*@{
+    int tot_fee = 0;
+
+    foreach (var item in Model)
+    {
+        tot_fee += item.Parking_Fee;
+    }
+
+}*@
+
+<head>
+    <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
+    <style>
+        h3.card-title {
+            font-weight: bold;
+        }
+
+        div.col-md-12 {
+            width: 950px;
+        }
+
+        div.card-header {
+            background-color: white;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+      /*  div.card-footer {
+            background-color: white;
+            font-weight: bold;
+        }*/
+
+        div.card-body.table-full-width.table-responsive {
+            margin-bottom: 20px;
+        }
+
+        #srow {
+            display: inline-block;
+        }
+
+        p.card-category {
+            font-weight: bold;
+        }
+
+        body {
+            text-align: center;
+            font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row" id="srow">
+            <div class="col-md-12">
+                <div class="card card-plain table-plain-bg">
+                    <div class="card-header">
+                        <h3 class="card-title">모든 차량 보기</h3>
+                        <p class="card-category">출차를 완료한 모든 차량입니다.</p>
+                    </div>
+                    <div class="card-body table-full-width table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                @*<th>ID</th>*@
+                            <th>차량 번호</th>
+                            <th>입차 시각</th>
+                            <th>출차 시각</th>
+                            <th>주차 요금</th>
+                            <th>차량 주인</th>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        @*<td>@item.Car_ID</td>*@
+                                        <td>@item.CarNum</td>
+                                        <td>@item.InTime.ToString("yyyy-MM-dd HH:mm")</td>
+                                        <td>@item.OutTime.ToString("yyyy-MM-dd HH:mm")</td>
+                                        <td>@item.Parking_Fee</td>
+                                        <td>@item.Owner_Name</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        @*<p class="card-category">주차장의 총 수익은 @tot_fee 입니다.</p>*@
+                        @if (Model.Count() == 0)
+                        {
+                            <div class="alert alert-info">
+                                데이터가 없습니다
+                            </div>
+                        }
+                    </div>
+                    <div class="text-center">
+                        <div class="btn-group">
+                            @Html.PagedListPager(Model, page => Url.Action("TotalTableList", new { page }))
+                        </div>
+                    </div>
+                    @*<div class="card-footer">
+                        <p class="card-category">주차장의 총 수익은 @tot_fee 입니다.</p>
+                    </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

@@ -134,6 +134,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -295,6 +296,8 @@
     <Content Include="Views\Login\Register.cshtml" />
     <Content Include="Views\Login\UserProfile.cshtml" />
     <Content Include="Views\Home\ParkingView.cshtml" />
+    <Content Include="Views\Admin\TotalTableList.cshtml" />
+    <Content Include="Views\Admin\CheckFee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
