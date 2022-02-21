@@ -42,11 +42,16 @@ namespace ParkingManagement.Controllers
                 model.CarNum = carnum;
                 model.Owner_Name = User.Identity.Name;
 
+                var cars = Car.GetList(carnum);
+                foreach (var item in cars)
+                {
+                    if (model.CarNum == item.CarNum)
+                    {
+                        throw new Exception("이미 입차된 차량입니다");
+                    }
+                }
+
                 model.Insert();
-                //if (model.Insert() <= 0)
-                //{
-                //    throw new Exception("이미 입차된 차량입니다");
-                //}
 
                 return Content("<script> alert('차량번호: " + model.CarNum + " 입차합니다.'); location.href = '/home/TableList'; </script>");
             }
@@ -57,14 +62,13 @@ namespace ParkingManagement.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize] // 로그인 해야 출차 가능
         public ActionResult TableDelete(string msg)
         {
             ViewData["msg"] = msg;
             return View();
         }
 
-        // 차량 번호는 Input에서 받음..
         [Authorize]
         public ActionResult TableDelete_Input(string carnum)
         {

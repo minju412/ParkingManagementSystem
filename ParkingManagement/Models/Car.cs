@@ -20,22 +20,6 @@ namespace ParkingManagement.Models
 
         public string Flag { get; set; }
 
-        void CheckContents()
-        {
-            if (string.IsNullOrWhiteSpace(this.CarNum))
-            {
-                throw new Exception("차량번호가 없습니다.");
-            }
-            if (string.IsNullOrWhiteSpace(this.InTime.ToString()))
-            {
-                throw new Exception("입차시각이 없습니다.");
-            }
-            if (string.IsNullOrWhiteSpace(this.Owner_Name))
-            {
-                throw new Exception("차량주인이 없습니다.");
-            }
-        }
-
         public static List<Car> GetList(string search)
         {
             string sql = "SELECT * FROM c_table WHERE flag='y' ORDER BY car_id ASC"; ;
@@ -58,9 +42,8 @@ namespace ParkingManagement.Models
 
         public int Insert()
         {
-            CheckContents();
-
             string sql = "INSERT INTO c_table (car_id,carnum,intime,owner_name,flag) VALUES (C_TABLE_SEQ.NEXTVAL,:carnum,SYSDATE,:owner_name,'y')";
+            //string sql = "INSERT INTO c_table (car_id,carnum,intime,owner_name,flag) SELECT C_TABLE_SEQ.NEXTVAL,:carnum,SYSDATE,:owner_name,'y' FROM dual WHERE NOT EXISTS(SELECT 1 FROM c_table WHERE carnum=:carnum AND flag='y')";
 
             using (var db = new DapperHelper())
             {
