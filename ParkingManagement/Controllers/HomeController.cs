@@ -1,7 +1,6 @@
 ﻿using PagedList;
 using ParkingManagement.Models;
 using System;
-using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 
@@ -41,7 +40,6 @@ namespace ParkingManagement.Controllers
                 var model = new Car();
 
                 model.CarNum = carnum;
-                //model.Owner = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
                 model.Owner_Name = User.Identity.Name;
 
                 model.Insert();
@@ -76,13 +74,13 @@ namespace ParkingManagement.Controllers
 
                 if (model == null)
                 {
-                    throw new Exception("없는 차량입니다");
+                    throw new Exception("입차되지 않은 차량입니다");
                 }
 
                 // 권한 확인
                 if(model.Owner_Name != User.Identity.Name)
                 {
-                    throw new Exception("출차할 수 없습니다.");
+                    throw new Exception("출차 권한이 없습니다.");
                 }
 
                 model.UpdateOutTime(); // db update - 출차시각 
@@ -103,7 +101,6 @@ namespace ParkingManagement.Controllers
                 // 실패
                 return Redirect($"/home/tabledelete?msg={HttpUtility.UrlEncode(ex.Message)}");
             }
-            //throw new Exception("잘못된 요청입니다");
         }
 
         // 주차 요금 계산

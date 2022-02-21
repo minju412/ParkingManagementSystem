@@ -16,8 +16,6 @@ namespace ParkingManagement.Models
 
         public string Owner_Name { get; set; }
 
-        //public int Owner { get; set; }
-
         public int Parking_Fee { get; set; }
 
         public string Flag { get; set; }
