@@ -5,36 +5,6 @@ namespace ParkingManagement.Models
 {
     public class TruckModel : CarModel
     {
-        //public static List<TruckModel> GetList(string search)
-        //{
-        //    string sql = "SELECT * FROM c_table WHERE flag='y' ORDER BY car_id ASC";
-
-        //    using (var db = new DapperHelper())
-        //    {
-        //        return db.Query<TruckModel>(sql, new { search = search });
-        //    }
-        //}
-
-        //public static List<TruckModel> GetTotalList(string search)
-        //{
-        //    string sql = "SELECT * FROM c_table WHERE flag='n' ORDER BY car_id ASC";
-
-        //    using (var db = new DapperHelper())
-        //    {
-        //        return db.Query<TruckModel>(sql, new { search = search });
-        //    }
-        //}
-
-        //public static TruckModel Get(string carnum)
-        //{
-        //    string sql = "SELECT * FROM c_table WHERE carnum=:carnum AND flag='y'";
-
-        //    using (var db = new DapperHelper())
-        //    {
-        //        return db.QuerySingle<TruckModel>(sql, new { carnum = carnum });
-        //    }
-        //}
-
         public override int Insert()
         {
             string sql = "INSERT INTO c_table (car_id,carnum,intime,owner_name,flag,car_type) VALUES (C_TABLE_SEQ.NEXTVAL,:carnum,SYSDATE,:owner_name,'y','truck')";

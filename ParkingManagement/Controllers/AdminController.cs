@@ -17,11 +17,6 @@ namespace ParkingManagement.Controllers
             return View(cars.ToPagedList(pageNum, listCount));
         }
 
-        //public ActionResult TotalTableList(string search)
-        //{
-        //    return View(Car.GetTotalList(search));
-        //}
-
         public ActionResult CheckFee(string search)
         {
             return View(CarModel.GetTotalList(search));
@@ -36,20 +31,5 @@ namespace ParkingManagement.Controllers
 
             return View(users.ToPagedList(pageNum, listCount));
         }
-
-        //int CalcTotalFee(string search)
-        //{
-        //    int tot_fee = 0;
-
-        //    var cars = Car.GetTotalList(search);
-
-        //    foreach (var item in cars)
-        //    {
-        //        tot_fee += item.Parking_Fee;
-        //    }
-
-        //    return tot_fee;
-        //}
-
     }
 }

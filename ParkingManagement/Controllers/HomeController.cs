@@ -106,8 +106,6 @@ namespace ParkingManagement.Controllers
                         break;
                 }
 
-                //var model = CarModel.Get(carnum);
-
                 if (model == null)
                 {
                     throw new Exception("입차되지 않은 차량입니다");
@@ -119,12 +117,19 @@ namespace ParkingManagement.Controllers
                     throw new Exception("출차 권한이 없습니다.");
                 }
 
+                // 차량 종류와 번호가 매칭되지 않으면
+                if (model.Car_Type != cartype)
+                {
+                    throw new Exception("차량 종류 혹은 번호가 올바르지 않습니다");
+                }
+
                 model.UpdateOutTime(); // db update - 출차시각 
 
                 int fee = model.CalcFee(carnum);
 
                 model.UpdateFee(fee); // db update - 주차요금
-                                      //model = CarModel.Get(carnum); // 주차요금 업데이트된 모델 받음 // 살리기!
+
+                // 주차요금 업데이트된 모델 받음
                 switch (cartype)
                 {
                     case "truck":
