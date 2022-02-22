@@ -54,7 +54,7 @@ namespace ParkingManagement.Models
             }
         }
 
-        public virtual int Insert()
+        public virtual int Insert() // virtual - 상속
         {
             string sql = "INSERT INTO c_table (car_id,carnum,intime,owner_name,flag) VALUES (C_TABLE_SEQ.NEXTVAL,:carnum,SYSDATE,:owner_name,'y')";
 
@@ -95,6 +95,14 @@ namespace ParkingManagement.Models
             }
         }
 
+        //public int CalcMin(string carnum)
+        //{
+        //    var model = CarModel.Get(carnum);
+        //    int min = (model.OutTime.Day * 24 * 60 + model.OutTime.Hour * 60 + model.OutTime.Minute) - (model.InTime.Day * 24 * 60 + model.InTime.Hour * 60 + model.InTime.Minute);
+
+        //    return min;
+        //}
+
         // 주차 요금 계산
         public virtual int CalcFee(string carnum)
         {
@@ -110,6 +118,7 @@ namespace ParkingManagement.Models
 
             // 주차 시간 계산 (분으로 환산)
             int min = (model.OutTime.Day * 24 * 60 + model.OutTime.Hour * 60 + model.OutTime.Minute) - (model.InTime.Day * 24 * 60 + model.InTime.Hour * 60 + model.InTime.Minute);
+            //int min = CalcMin(carnum);
 
             // 주차 요금 계산
             int fee = 0;
