@@ -41,11 +41,11 @@ namespace ParkingManagement.Controllers
 
                 switch (cartype)
                 {
-                    case "truck":
+                    case "t":
                         model = new TruckModel();
                         break;
 
-                    case "bus":
+                    case "b":
                         model = new BusModel();
                         break;
 
@@ -93,11 +93,11 @@ namespace ParkingManagement.Controllers
 
                 switch (cartype)
                 {
-                    case "truck":
+                    case "t":
                         model = model.Get<TruckModel>(carnum);
                         break;
 
-                    case "bus":
+                    case "b":
                         model = model.Get<BusModel>(carnum);
                         break;
 
@@ -132,11 +132,11 @@ namespace ParkingManagement.Controllers
                 // 주차요금 업데이트된 모델 받음
                 switch (cartype)
                 {
-                    case "truck":
+                    case "t":
                         model = model.Get<TruckModel>(carnum);
                         break;
 
-                    case "bus":
+                    case "b":
                         model = model.Get<BusModel>(carnum);
                         break;
 

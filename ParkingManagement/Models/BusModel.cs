@@ -7,7 +7,7 @@ namespace ParkingManagement.Models
     {
         public override int Insert()
         {
-            string sql = "INSERT INTO c_table (car_id,carnum,intime,owner_name,flag,car_type) VALUES (C_TABLE_SEQ.NEXTVAL,:carnum,SYSDATE,:owner_name,'y','bus')";
+            string sql = "INSERT INTO c_table (car_id,carnum,intime,owner_name,flag,car_type) VALUES (C_TABLE_SEQ.NEXTVAL,:carnum,SYSDATE,:owner_name,'y','b')";
 
             using (var db = new DapperHelper())
             {

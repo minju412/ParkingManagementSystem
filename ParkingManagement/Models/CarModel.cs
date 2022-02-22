@@ -66,7 +66,7 @@ namespace ParkingManagement.Models
 
         public virtual int Insert() // virtual - 상속
         {
-            string sql = "INSERT INTO c_table (car_id,carnum,intime,owner_name,flag) VALUES (C_TABLE_SEQ.NEXTVAL,:carnum,SYSDATE,:owner_name,'y')";
+            string sql = "INSERT INTO c_table (car_id,carnum,intime,owner_name,flag,car_type) VALUES (C_TABLE_SEQ.NEXTVAL,:carnum,SYSDATE,:owner_name,'y','c')";
 
             using (var db = new DapperHelper())
             {
