@@ -105,33 +105,11 @@ namespace ParkingManagement.Models
             }
         }
 
-        //public int CalcMin(string carnum)
-        //{
-        //    var model = CarModel.Get(carnum);
-        //    int min = (model.OutTime.Day * 24 * 60 + model.OutTime.Hour * 60 + model.OutTime.Minute) - (model.InTime.Day * 24 * 60 + model.InTime.Hour * 60 + model.InTime.Minute);
-
-        //    return min;
-        //}
-
         // 주차 요금 계산
-        public virtual int CalcFee(string carnum)
+        public int _calcFee(CarModel model, int basic_min, int basic_fee, int add_min, int add_fee)
         {
-            // 30분 미만 기본요금 1000원
-            int basic_min = 30;
-            int basic_fee = 1000;
-
-            // 추가 10분당 500원
-            int add_min = 10;
-            int add_fee = 500;
-
-
-            var model = new CarModel();
-            model = model.Get<CarModel>(carnum);
-            //var model = CarModel.Get(carnum);
-
             // 주차 시간 계산 (분으로 환산)
             int min = (model.OutTime.Day * 24 * 60 + model.OutTime.Hour * 60 + model.OutTime.Minute) - (model.InTime.Day * 24 * 60 + model.InTime.Hour * 60 + model.InTime.Minute);
-            //int min = CalcMin(carnum);
 
             // 주차 요금 계산
             int fee = 0;
@@ -153,6 +131,22 @@ namespace ParkingManagement.Models
                 fee = basic_fee;
 
             return fee;
+
+        }
+        public virtual int CalcFee(string carnum)
+        {
+            // 30분 미만 기본요금 1000원
+            int basic_min = 30;
+            int basic_fee = 1000;
+
+            // 추가 10분당 500원
+            int add_min = 10;
+            int add_fee = 500;
+
+            var model = new CarModel();
+            model = model.Get<CarModel>(carnum);
+
+            return _calcFee(model, basic_min, basic_fee, add_min, add_fee);
         }
 
     }

@@ -157,7 +157,6 @@ namespace ParkingManagement.Controllers
             }
         }
 
-
         //[Authorize]
         //public ActionResult TableDelete_Input(string carnum)
         //{

@@ -27,31 +27,8 @@ namespace ParkingManagement.Models
 
             var model = new TruckModel();
             model = model.Get<TruckModel>(carnum);
-            //var model = TruckModel.Get(carnum);
 
-            // 주차 시간 계산 (분으로 환산)
-            int min = (model.OutTime.Day * 24 * 60 + model.OutTime.Hour * 60 + model.OutTime.Minute) - (model.InTime.Day * 24 * 60 + model.InTime.Hour * 60 + model.InTime.Minute);
-
-            // 주차 요금 계산
-            int fee = 0;
-            if (min >= basic_min)
-            {
-                fee += basic_fee;
-                min -= basic_min;
-
-                if (min % add_min == 0)
-                {
-                    fee += add_fee * (min / add_min);
-                }
-                else
-                {
-                    fee += add_fee * (min / add_min) + add_fee;
-                }
-            }
-            else
-                fee = basic_fee;
-
-            return fee;
+            return _calcFee(model, basic_min, basic_fee, add_min, add_fee);
         }
     }
 }
