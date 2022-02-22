@@ -38,7 +38,7 @@ namespace ParkingManagement.Controllers
         {
             try
             {
-                CarModel model;
+                VehiclesModel model;
 
                 switch (cartype)
                 {
@@ -90,7 +90,8 @@ namespace ParkingManagement.Controllers
         {
             try
             {
-                var model = CarModel.Get(carnum);
+                VehiclesModel model = new CarModel();
+                model = model.Get(carnum); // 문제: CarModel 안에서만 Get 해옴..
 
                 if (model == null)
                 {
@@ -106,7 +107,7 @@ namespace ParkingManagement.Controllers
                 int fee = model.CalcFee(carnum);
 
                 model.UpdateFee(fee); 
-                model = CarModel.Get(carnum); // 주차요금 업데이트된 모델 받음
+                //model = CarModel.Get(carnum); // 주차요금 업데이트된 모델 받음 - 나중에 살리기
 
                 model.Delete();
 
@@ -117,8 +118,6 @@ namespace ParkingManagement.Controllers
                 return Redirect($"/home/tabledelete?msg={HttpUtility.UrlEncode(ex.Message)}");
             }
         }
-
-
 
 
         //[Authorize]

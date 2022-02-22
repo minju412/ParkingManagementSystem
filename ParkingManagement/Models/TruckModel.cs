@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace ParkingManagement.Models
 {
-    public class TruckModel : CarModel
+    public class TruckModel : VehiclesModel
     {
-        //public static List<TruckModel> GetList(string search)
+        //public override List<TruckModel> GetList(string search)
         //{
         //    string sql = "SELECT * FROM c_table WHERE flag='y' ORDER BY car_id ASC";
 
@@ -15,7 +15,7 @@ namespace ParkingManagement.Models
         //    }
         //}
 
-        //public static List<TruckModel> GetTotalList(string search)
+        //public override List<TruckModel> GetTotalList(string search)
         //{
         //    string sql = "SELECT * FROM c_table WHERE flag='n' ORDER BY car_id ASC";
 
@@ -25,15 +25,15 @@ namespace ParkingManagement.Models
         //    }
         //}
 
-        //public static TruckModel Get(string carnum)
-        //{
-        //    string sql = "SELECT * FROM c_table WHERE carnum=:carnum AND flag='y'";
+        public override VehiclesModel Get(string carnum)
+        {
+            string sql = "SELECT * FROM c_table WHERE carnum=:carnum AND flag='y'";
 
-        //    using (var db = new DapperHelper())
-        //    {
-        //        return db.QuerySingle<TruckModel>(sql, new { carnum = carnum });
-        //    }
-        //}
+            using (var db = new DapperHelper())
+            {
+                return db.QuerySingle<TruckModel>(sql, new { carnum = carnum });
+            }
+        }
 
         public override int Insert()
         {
@@ -55,7 +55,9 @@ namespace ParkingManagement.Models
             int add_min = 60;
             int add_fee = 4000;
 
-            var model = TruckModel.Get(carnum);
+            var model = new TruckModel();
+            model = model.Get(carnum) as TruckModel;
+            //var model = TruckModel.Get(carnum);
 
             // 주차 시간 계산 (분으로 환산)
             int min = (model.OutTime.Day * 24 * 60 + model.OutTime.Hour * 60 + model.OutTime.Minute) - (model.InTime.Day * 24 * 60 + model.InTime.Hour * 60 + model.InTime.Minute);
