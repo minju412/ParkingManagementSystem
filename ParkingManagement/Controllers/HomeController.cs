@@ -41,6 +41,10 @@ namespace ParkingManagement.Controllers
 
                 switch (cartype)
                 {
+                    case "c":
+                        model = new CarModel();
+                        break;
+
                     case "t":
                         model = new TruckModel();
                         break;
@@ -50,8 +54,7 @@ namespace ParkingManagement.Controllers
                         break;
 
                     default:
-                        model = new CarModel();
-                        break;
+                        throw new Exception("차량 종류를 선택하세요");
                 }
 
                 model.CarNum = carnum;
@@ -93,6 +96,10 @@ namespace ParkingManagement.Controllers
 
                 switch (cartype)
                 {
+                    case "c":
+                        model = model.Get<CarModel>(carnum);
+                        break;
+
                     case "t":
                         model = model.Get<TruckModel>(carnum);
                         break;
@@ -102,8 +109,7 @@ namespace ParkingManagement.Controllers
                         break;
 
                     default:
-                        model = model.Get<CarModel>(carnum);
-                        break;
+                        throw new Exception("차량 종류를 선택하세요");
                 }
 
                 if (model == null)
@@ -132,16 +138,16 @@ namespace ParkingManagement.Controllers
                 // 주차요금 업데이트된 모델 받음
                 switch (cartype)
                 {
+                    case "c":
+                        model = model.Get<CarModel>(carnum);
+                        break;
+
                     case "t":
                         model = model.Get<TruckModel>(carnum);
                         break;
 
                     case "b":
                         model = model.Get<BusModel>(carnum);
-                        break;
-
-                    default:
-                        model = model.Get<CarModel>(carnum);
                         break;
                 }
 
