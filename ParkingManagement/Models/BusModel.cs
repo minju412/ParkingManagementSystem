@@ -55,7 +55,9 @@ namespace ParkingManagement.Models
             int add_min = 30;
             int add_fee = 2000;
 
-            var model = BusModel.Get(carnum);
+            var model = new BusModel();
+            model = model.Get<BusModel>(carnum);
+            //var model = BusModel.Get(carnum);
 
             // 주차 시간 계산 (분으로 환산)
             int min = (model.OutTime.Day * 24 * 60 + model.OutTime.Hour * 60 + model.OutTime.Minute) - (model.InTime.Day * 24 * 60 + model.InTime.Hour * 60 + model.InTime.Minute);
@@ -82,4 +84,4 @@ namespace ParkingManagement.Models
             return fee;
         }
     }
-}
+} 

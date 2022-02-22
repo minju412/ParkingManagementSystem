@@ -44,15 +44,25 @@ namespace ParkingManagement.Models
             }
         }
 
-        public static CarModel Get(string carnum)
+        public T Get<T>(string carnum) where T : CarModel
         {
             string sql = "SELECT * FROM c_table WHERE carnum=:carnum AND flag='y'";
 
             using (var db = new DapperHelper())
             {
-                return db.QuerySingle<CarModel>(sql, new { carnum = carnum });
+                return db.QuerySingle<T>(sql, new { carnum = carnum });
             }
         }
+
+        //public static CarModel Get(string carnum) 
+        //{
+        //    string sql = "SELECT * FROM c_table WHERE carnum=:carnum AND flag='y'";
+
+        //    using (var db = new DapperHelper())
+        //    {
+        //        return db.QuerySingle<CarModel>(sql, new { carnum = carnum });
+        //    }
+        //}
 
         public virtual int Insert() // virtual - 상속
         {
@@ -114,7 +124,10 @@ namespace ParkingManagement.Models
             int add_min = 10;
             int add_fee = 500;
 
-            var model = CarModel.Get(carnum);
+
+            var model = new CarModel();
+            model = model.Get<CarModel>(carnum);
+            //var model = CarModel.Get(carnum);
 
             // 주차 시간 계산 (분으로 환산)
             int min = (model.OutTime.Day * 24 * 60 + model.OutTime.Hour * 60 + model.OutTime.Minute) - (model.InTime.Day * 24 * 60 + model.InTime.Hour * 60 + model.InTime.Minute);

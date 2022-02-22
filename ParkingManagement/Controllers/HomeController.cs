@@ -85,11 +85,28 @@ namespace ParkingManagement.Controllers
         }
 
         [Authorize]
-        public ActionResult TableDelete_Input(string carnum)
+        public ActionResult TableDelete_Input(string carnum, string cartype)
         {
             try
             {
-                var model = CarModel.Get(carnum);
+                var model = new CarModel();
+
+                switch (cartype)
+                {
+                    case "truck":
+                        model = model.Get<TruckModel>(carnum);
+                        break;
+
+                    case "bus":
+                        model = model.Get<BusModel>(carnum);
+                        break;
+
+                    default:
+                        model = model.Get<CarModel>(carnum);
+                        break;
+                }
+
+                //var model = CarModel.Get(carnum);
 
                 if (model == null)
                 {
@@ -97,18 +114,31 @@ namespace ParkingManagement.Controllers
                 }
 
                 // 권한 확인
-                if(model.Owner_Name != User.Identity.Name)
+                if (model.Owner_Name != User.Identity.Name)
                 {
                     throw new Exception("출차 권한이 없습니다.");
                 }
 
                 model.UpdateOutTime(); // db update - 출차시각 
-                model = CarModel.Get(carnum); // 출차 시각 업데이트된 모델 받음
 
                 int fee = model.CalcFee(carnum);
 
                 model.UpdateFee(fee); // db update - 주차요금
-                model = CarModel.Get(carnum); // 주차요금 업데이트된 모델 받음
+                                      //model = CarModel.Get(carnum); // 주차요금 업데이트된 모델 받음 // 살리기!
+                switch (cartype)
+                {
+                    case "truck":
+                        model = model.Get<TruckModel>(carnum);
+                        break;
+
+                    case "bus":
+                        model = model.Get<BusModel>(carnum);
+                        break;
+
+                    default:
+                        model = model.Get<CarModel>(carnum);
+                        break;
+                }
 
                 model.Delete(); // db delete
 
@@ -168,6 +198,6 @@ namespace ParkingManagement.Controllers
         {
             return View();
         }
-       
+
     }
 }
