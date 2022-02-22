@@ -8,29 +8,51 @@
         h3.text-center {
             font-weight: bold;
         }
+
         div.card-block {
             margin-top: 30px;
             margin-bottom: 20px;
             margin-left: 50px;
             margin-right: 50px;
         }
+
         div.form-group.form-primary {
             margin-top: 20px;
         }
+
         label.float-label {
             margin-bottom: 5px;
         }
+
         div.row.m-t-30 {
-            margin-top: 80px;
+            margin-top: 60px;
             float: right;
         }
+
         input.form-control {
             width: 400px;
             text-align: center;
         }
+
         #sform {
             display: inline-block;
         }
+
+        div.dropdown {
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+
+        label.dropdown-label {
+            margin-right: 10px;
+        }
+
+        #cartype {
+            height: 30px;
+            width: 150px;
+            text-align: center;
+        }
+
         body {
             text-align: center;
             font-family: 'Spoqa Han Sans Neo', 'sans-serif';
@@ -53,10 +75,10 @@
                                     }
                                 </div>
                             </div>
-                            <div class="form-group form-primary">
-                                <label class="float-label">차량 종류</label>
+                            <div class="dropdown">
+                                <label class="dropdown-label">차량 종류</label>
                                 <select name="cartype" id="cartype">
-                                    <option value="none">=== 선택 ===</option>
+                                    <option value="none">선택</option>
                                     <option value="c">승용차</option>
                                     <option value="b">버스</option>
                                     <option value="t">트럭</option>
