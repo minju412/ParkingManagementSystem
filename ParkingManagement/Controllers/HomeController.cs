@@ -33,11 +33,26 @@ namespace ParkingManagement.Controllers
         }
 
         [Authorize]
-        public ActionResult TableInsert_Input(string carnum)
+        public ActionResult TableInsert_Input(string carnum, string cartype)
         {
             try
             {
-                var model = new CarModel();
+                CarModel model;
+
+                switch (cartype)
+                {
+                    case "truck":
+                        model = new TruckModel();
+                        break;
+
+                    case "bus":
+                        model = new BusModel();
+                        break;
+
+                    default:
+                        model = new CarModel();
+                        break;
+                }
 
                 model.CarNum = carnum;
                 model.Owner_Name = User.Identity.Name;
@@ -90,7 +105,7 @@ namespace ParkingManagement.Controllers
                 model.UpdateOutTime(); // db update - 출차시각 
                 model = CarModel.Get(carnum); // 출차 시각 업데이트된 모델 받음
 
-                int fee = CalcFee(carnum);
+                int fee = model.CalcFee(carnum);
 
                 model.UpdateFee(fee); // db update - 주차요금
                 model = CarModel.Get(carnum); // 주차요금 업데이트된 모델 받음
@@ -107,43 +122,7 @@ namespace ParkingManagement.Controllers
             }
         }
 
-        // 주차 요금 계산
-        int CalcFee(string carnum)
-        {
-            // 30분 미만 기본요금 1500원
-            int basic_min = 30;
-            int basic_fee = 1500;
-
-            // 추가 10분당 500원
-            int add_min = 10;
-            int add_fee = 500;
-
-            var model = CarModel.Get(carnum);
-
-            // 주차 시간 계산 (분으로 환산)
-            int min = (model.OutTime.Day * 24 * 60 + model.OutTime.Hour * 60 + model.OutTime.Minute) - (model.InTime.Day * 24 * 60 + model.InTime.Hour * 60 + model.InTime.Minute);
-
-            // 주차 요금 계산
-            int fee = 0;
-            if (min >= basic_min)
-            {
-                fee += basic_fee;
-                min -= basic_min;
-
-                if (min % add_min == 0)
-                {
-                    fee += add_fee * (min / add_min);
-                }
-                else
-                {
-                    fee += add_fee * (min / add_min) + add_fee;
-                }
-            }
-            else
-                fee = basic_fee;
-
-            return fee;
-        }
+       
 
         // 주차장 시설 확인
         public ActionResult ParkingView()

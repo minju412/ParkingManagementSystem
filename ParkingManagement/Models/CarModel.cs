@@ -20,6 +20,8 @@ namespace ParkingManagement.Models
 
         public string Flag { get; set; }
 
+        public string Car_Type { get; set; }
+
         // 사용자용 (주차장 이용 중인 차)
         public static List<CarModel> GetList(string search)
         {
@@ -52,7 +54,7 @@ namespace ParkingManagement.Models
             }
         }
 
-        public int Insert()
+        public virtual int Insert()
         {
             string sql = "INSERT INTO c_table (car_id,carnum,intime,owner_name,flag) VALUES (C_TABLE_SEQ.NEXTVAL,:carnum,SYSDATE,:owner_name,'y')";
 
@@ -93,7 +95,43 @@ namespace ParkingManagement.Models
             }
         }
 
+        // 주차 요금 계산
+        public virtual int CalcFee(string carnum)
+        {
+            // 30분 미만 기본요금 1000원
+            int basic_min = 30;
+            int basic_fee = 1000;
 
+            // 추가 10분당 500원
+            int add_min = 10;
+            int add_fee = 500;
+
+            var model = CarModel.Get(carnum);
+
+            // 주차 시간 계산 (분으로 환산)
+            int min = (model.OutTime.Day * 24 * 60 + model.OutTime.Hour * 60 + model.OutTime.Minute) - (model.InTime.Day * 24 * 60 + model.InTime.Hour * 60 + model.InTime.Minute);
+
+            // 주차 요금 계산
+            int fee = 0;
+            if (min >= basic_min)
+            {
+                fee += basic_fee;
+                min -= basic_min;
+
+                if (min % add_min == 0)
+                {
+                    fee += add_fee * (min / add_min);
+                }
+                else
+                {
+                    fee += add_fee * (min / add_min) + add_fee;
+                }
+            }
+            else
+                fee = basic_fee;
+
+            return fee;
+        }
 
     }
 }

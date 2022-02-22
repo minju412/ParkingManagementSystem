@@ -50,6 +50,7 @@
                             <thead>
                                 @*<th>ID</th>*@
                             <th>차량 번호</th>
+                            <th>차량 종류</th>
                             <th>입차 시각</th>
                             <th>출차 시각</th>
                             <th>주차 요금</th>
@@ -58,14 +59,15 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                    <tr>
-                                        @*<td>@item.Car_ID</td>*@
-                                        <td>@item.CarNum</td>
-                                        <td>@item.InTime.ToString("yyyy-MM-dd HH:mm")</td>
-                                        <td>@item.OutTime.ToString("yyyy-MM-dd HH:mm")</td>
-                                        <td>@item.Parking_Fee</td>
-                                        <td>@item.Owner_Name</td>
-                                    </tr>
+                                <tr>
+                                    @*<td>@item.Car_ID</td>*@
+                                    <td>@item.CarNum</td>
+                                    <td>@item.Car_Type</td>
+                                    <td>@item.InTime.ToString("yyyy-MM-dd HH:mm")</td>
+                                    <td>@item.OutTime.ToString("yyyy-MM-dd HH:mm")</td>
+                                    <td>@item.Parking_Fee</td>
+                                    <td>@item.Owner_Name</td>
+                                </tr>
                                 }
                             </tbody>
                         </table>
