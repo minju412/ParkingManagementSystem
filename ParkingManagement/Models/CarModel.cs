@@ -130,6 +130,12 @@ namespace ParkingManagement.Models
             else
                 fee = basic_fee;
 
+            // 최대 요금(10만원) 적용
+            if (fee >= 100000)
+            {
+                fee = 100000;
+            }
+
             return fee;
 
         }
