@@ -13,6 +13,7 @@ namespace ParkingManagement.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult TableList(int? page, string search)
         {
             // Paging
