@@ -78,10 +78,19 @@ namespace ParkingManagement.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(UserModel input)
+        public ActionResult Register(UserModel input, string search)
         {
             try
             {
+                var users = UserModel.GetUserList(search);
+                foreach (var item in users)
+                {
+                    if (input.Email == item.Email)
+                    {
+                        throw new Exception("사용할 수 없는 이메일입니다");
+                    }
+                }
+
                 string password2 = Request.Form["password2"];
 
                 if (input.Password != password2)
