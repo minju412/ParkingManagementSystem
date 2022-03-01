@@ -18,10 +18,10 @@
 3. 사용자 리스트 확인 <br/><br/>
 
 ## 🔔 개발 환경<br/>
-ASP.NET MVC<br/>
-.NET Framework 4.8<br/>
-Oracle Db / Oracle SQL Developer<br/>
-VisualStudio 2019 <br/><br/>
+- ASP.NET MVC<br/>
+- .NET Framework 4.8<br/>
+- Oracle Db / Oracle SQL Developer<br/>
+- VisualStudio 2019 <br/><br/>
 
 ## 🔔 레이아웃 출처<br/>
 https://bootstrapmade.com/website-templates/
